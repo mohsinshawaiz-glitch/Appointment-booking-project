@@ -1,0 +1,607 @@
+:root {
+        --teal: #006d77;
+        --teal-light: #0a8a95;
+        --teal-glow: rgba(0,109,119,0.15);
+        --bg: #f4f1ed;
+        --card: #ffffff;
+        --text: #1a2f35;
+        --muted: #6b7c85;
+        --border: #e2ddd8;
+        --accent: #e29578;
+        --success: #2d6a4f;
+        --danger: #c44536;
+      }
+
+      * { margin:0; padding:0; box-sizing:border-box; }
+
+      body {
+        font-family:'DM Sans',sans-serif;
+        background:var(--bg);
+        min-height:100vh;
+        color:var(--text);
+        overflow-x:hidden;
+      }
+
+      body::before {
+        content:'';
+        position:fixed;
+        inset:0;
+        pointer-events:none;
+        z-index:0;
+        background:
+          radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,109,119,.07) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 40% at 80% 80%, rgba(226,149,120,.08) 0%, transparent 50%);
+      }
+
+      .container {
+        max-width:1100px;
+        margin:0 auto;
+        padding:40px 20px;
+        position:relative;
+        z-index:1;
+      }
+
+      /* ── HEADER ── */
+      header {
+        text-align:center;
+        margin-bottom:50px;
+        animation:fadeDown .7s ease both;
+      }
+      header h1 {
+        font-family:'Cormorant Garamond',serif;
+        font-size:4.2rem;
+        color:var(--teal);
+        letter-spacing:-3px;
+        line-height:1;
+      }
+      header p {
+        font-size:1rem;
+        color:var(--muted);
+        letter-spacing:3px;
+        text-transform:uppercase;
+        margin-top:4px;
+      }
+      .tagline {
+        display:inline-block;
+        background:var(--teal);
+        color:white;
+        padding:5px 18px;
+        border-radius:30px;
+        font-size:.82rem;
+        letter-spacing:1px;
+        margin-top:14px;
+      }
+
+      .section { animation:fadeUp .5s ease both; }
+      .hidden  { display:none !important; }
+
+      /* ── FORM BASICS ── */
+      .form-group { margin-bottom:20px; }
+
+      label {
+        display:block;
+        margin-bottom:7px;
+        font-size:.88rem;
+        font-weight:500;
+        color:var(--text);
+        letter-spacing:.3px;
+      }
+
+      input,
+      select {
+        width:100%;
+        padding:13px 16px;
+        border:1.5px solid var(--border);
+        border-radius:12px;
+        font-size:.97rem;
+        font-family:'DM Sans',sans-serif;
+        background:#faf9f7;
+        color:var(--text);
+        transition:.25s;
+      }
+
+      input:focus,
+      select:focus {
+        outline:none;
+        border-color:var(--teal);
+        background:white;
+        box-shadow:0 0 0 4px var(--teal-glow);
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:13px;
+        font-size:1rem;
+        font-weight:600;
+        cursor:pointer;
+        transition:all .3s ease;
+        font-family:'DM Sans',sans-serif;
+        letter-spacing:.3px;
+      }
+
+      .btn-primary {
+        background:linear-gradient(135deg, var(--teal), var(--teal-light));
+        color:white;
+        box-shadow:0 8px 20px rgba(0,109,119,.28);
+      }
+      .btn-primary:hover {
+        transform:translateY(-2px);
+        box-shadow:0 12px 28px rgba(0,109,119,.38);
+      }
+      .btn-primary:active { transform:translateY(0); }
+      .btn-primary:disabled {
+        opacity:.5;
+        cursor:not-allowed;
+        transform:none !important;
+        box-shadow:none !important;
+      }
+
+      .btn-outline {
+        background:transparent;
+        border:1.5px solid var(--border);
+        color:var(--muted);
+        margin-top:10px;
+      }
+      .btn-outline:hover {
+        border-color:var(--teal);
+        color:var(--teal);
+        background:var(--teal-glow);
+      }
+
+      .btn-pay {
+        background:linear-gradient(135deg, #1a6b3c, #228b55);
+        color:white;
+        box-shadow:0 8px 20px rgba(26,107,60,.3);
+      }
+      .btn-pay:hover {
+        transform:translateY(-2px);
+        box-shadow:0 12px 28px rgba(26,107,60,.4);
+      }
+      .btn-pay:disabled {
+        opacity:.5;
+        cursor:not-allowed;
+        transform:none !important;
+      }
+
+      /* ── LOGIN ── */
+      .login-card {
+        background:var(--card);
+        max-width:460px;
+        margin:0 auto;
+        padding:50px 44px;
+        border-radius:28px;
+        box-shadow:0 20px 60px rgba(0,0,0,.09), 0 0 0 1px var(--border);
+      }
+      .login-card h2 {
+        font-family:'Cormorant Garamond',serif;
+        font-size:2.2rem;
+        color:var(--teal);
+        margin-bottom:6px;
+      }
+      .login-card .sub {
+        color:var(--muted);
+        font-size:.95rem;
+        margin-bottom:34px;
+      }
+
+      .demo-hint {
+        background:#f0f8f9;
+        border:1px solid #c8e6ea;
+        border-radius:10px;
+        padding:10px 14px;
+        font-size:.83rem;
+        color:var(--teal);
+        margin-bottom:22px;
+      }
+      .demo-hint strong { display:block; margin-bottom:2px; }
+
+      /* ── USER BAR ── */
+      .user-bar {
+        display:flex;
+        justify-content:flex-end;
+        align-items:center;
+        gap:14px;
+        margin-bottom:30px;
+      }
+
+      .user-chip {
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:30px;
+        padding:7px 18px;
+        font-size:.88rem;
+        color:var(--text);
+        display:flex;
+        align-items:center;
+        gap:8px;
+        box-shadow:0 2px 8px rgba(0,0,0,.05);
+      }
+      .user-chip .dot {
+        width:8px;
+        height:8px;
+        background:var(--teal);
+        border-radius:50%;
+      }
+
+      .logout-btn {
+        font-size:.82rem;
+        color:var(--muted);
+        cursor:pointer;
+        text-decoration:underline;
+        background:none;
+        border:none;
+        font-family:'DM Sans',sans-serif;
+      }
+      .logout-btn:hover { color:var(--danger); }
+
+      .section-title {
+        text-align:center;
+        font-family:'Cormorant Garamond',serif;
+        font-size:2.4rem;
+        color:var(--text);
+        margin-bottom:10px;
+      }
+      .section-subtitle {
+        text-align:center;
+        color:var(--muted);
+        margin-bottom:38px;
+        font-size:.95rem;
+      }
+
+      /* ── DOMAIN CARDS ── */
+      .domains-grid {
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+        gap:24px;
+      }
+
+      .domain-card {
+        background:var(--card);
+        padding:40px 28px;
+        border-radius:22px;
+        text-align:center;
+        box-shadow:0 8px 28px rgba(0,0,0,.06);
+        border:1.5px solid var(--border);
+        cursor:pointer;
+        transition:all .35s cubic-bezier(.34,1.56,.64,1);
+        position:relative;
+        overflow:hidden;
+      }
+      .domain-card::after {
+        content:'';
+        position:absolute;
+        inset:0;
+        background:linear-gradient(135deg, var(--teal), var(--teal-light));
+        opacity:0;
+        transition:opacity .3s;
+      }
+      .domain-card:hover {
+        transform:translateY(-10px) scale(1.01);
+        border-color:var(--teal);
+        box-shadow:0 20px 50px rgba(0,109,119,.18);
+      }
+      .domain-card:hover::after { opacity:.04; }
+      .domain-card .icon { font-size:3.2rem; margin-bottom:18px; }
+      .domain-card h3   { font-size:1.5rem; font-weight:600; margin-bottom:6px; }
+      .domain-card p    { color:var(--muted); font-size:.93rem; }
+
+      .badge {
+        display:inline-block;
+        background:#e8f5f6;
+        color:var(--teal);
+        border-radius:20px;
+        padding:3px 12px;
+        font-size:.78rem;
+        font-weight:500;
+        margin-top:10px;
+      }
+
+      /* ── BOOKING CARD ── */
+      .booking-card {
+        background:var(--card);
+        max-width:620px;
+        margin:0 auto;
+        padding:50px 44px;
+        border-radius:28px;
+        box-shadow:0 20px 60px rgba(0,0,0,.09), 0 0 0 1px var(--border);
+      }
+      .booking-card h2 {
+        font-family:'Cormorant Garamond',serif;
+        font-size:2rem;
+        color:var(--teal);
+        margin-bottom:30px;
+        text-align:center;
+      }
+
+      .back-btn {
+        background:none;
+        border:none;
+        color:var(--muted);
+        font-size:.88rem;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        gap:6px;
+        margin-bottom:22px;
+        font-family:'DM Sans',sans-serif;
+        padding:0;
+        transition:color .2s;
+      }
+      .back-btn:hover { color:var(--teal); }
+
+      /* ── TIME SLOTS ── */
+      .slots-label {
+        font-size:.88rem;
+        font-weight:500;
+        color:var(--text);
+        letter-spacing:.3px;
+        margin-bottom:10px;
+        display:flex;
+        align-items:center;
+        gap:8px;
+      }
+
+      .slots-legend {
+        display:flex;
+        gap:14px;
+        margin-bottom:10px;
+        font-size:.78rem;
+        color:var(--muted);
+      }
+
+      .legend-dot {
+        display:inline-block;
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        margin-right:4px;
+      }
+      .legend-dot.free { background:var(--teal); }
+      .legend-dot.busy { background:#e2a39b; }
+
+      .slots-grid {
+        display:grid;
+        grid-template-columns:repeat(3, 1fr);
+        gap:10px;
+        margin-bottom:16px;
+      }
+
+      .slot-btn {
+        padding:13px 8px;
+        border-radius:11px;
+        border:1.5px solid var(--border);
+        font-size:.88rem;
+        font-weight:500;
+        cursor:pointer;
+        background:#faf9f7;
+        color:var(--text);
+        transition:all .2s;
+        font-family:'DM Sans',sans-serif;
+        text-align:center;
+      }
+      .slot-btn:hover:not(.slot-taken):not(.slot-selected) {
+        border-color:var(--teal);
+        color:var(--teal);
+        background:#f0f9fa;
+      }
+      .slot-btn.slot-selected {
+        background:var(--teal);
+        color:white;
+        border-color:var(--teal);
+        box-shadow:0 4px 14px rgba(0,109,119,.3);
+      }
+      .slot-btn.slot-taken {
+        background:#fdf0ee;
+        color:#c8a09a;
+        border-color:#f0ddd9;
+        cursor:not-allowed;
+      }
+      .slot-taken-tag {
+        display:block;
+        font-size:.68rem;
+        color:#d9836d;
+        margin-top:2px;
+      }
+
+      /* ── AVAILABILITY ── */
+      .availability-badge {
+        display:flex;
+        align-items:center;
+        gap:8px;
+        padding:10px 16px;
+        border-radius:10px;
+        font-size:.88rem;
+        font-weight:500;
+        margin-bottom:16px;
+      }
+      .avail-checking { background:#f5f5f5; color:var(--muted); }
+      .avail-free     { background:#d8f3dc; color:var(--success); }
+      .avail-busy     { background:#fde8e6; color:var(--danger); }
+
+      .pulse {
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        background:currentColor;
+        animation:pulseAnim 1.2s infinite;
+        flex-shrink:0;
+      }
+
+      /* ── MODALS ── */
+      .modal-overlay {
+        position:fixed;
+        inset:0;
+        background:rgba(26,47,53,.55);
+        backdrop-filter:blur(8px);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:100;
+        animation:fadeIn .3s ease;
+        padding:20px;
+      }
+
+      .modal {
+        background:white;
+        border-radius:28px;
+        padding:48px 44px;
+        max-width:500px;
+        width:100%;
+        text-align:center;
+        animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both;
+        box-shadow:0 30px 80px rgba(0,0,0,.22);
+        max-height:90vh;
+        overflow-y:auto;
+      }
+
+      .modal-icon {
+        width:72px;
+        height:72px;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:2rem;
+        margin:0 auto 20px;
+        animation:popIn .5s .15s both cubic-bezier(.34,1.56,.64,1);
+      }
+      .modal-icon.pay-icon     { background:linear-gradient(135deg, #1a6b3c, #228b55); }
+      .modal-icon.confirm-icon { background:linear-gradient(135deg, var(--teal), var(--teal-light)); }
+
+      .modal h3 {
+        font-family:'Cormorant Garamond',serif;
+        font-size:2rem;
+        color:var(--teal);
+        margin-bottom:8px;
+      }
+      .modal-sub {
+        color:var(--muted);
+        font-size:.93rem;
+        margin-bottom:24px;
+      }
+
+      /* ── SUMMARY INSIDE MODAL ── */
+      .booking-summary {
+        background:var(--bg);
+        border-radius:14px;
+        padding:16px 18px;
+        text-align:left;
+        margin-bottom:22px;
+      }
+
+      .s-row {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:5px 0;
+        font-size:.87rem;
+        border-bottom:1px solid var(--border);
+      }
+      .s-row:last-child { border-bottom:none; }
+      .s-row .k { color:var(--muted); }
+      .s-row .v {
+        font-weight:500;
+        color:var(--text);
+        text-align:right;
+        max-width:60%;
+      }
+      .s-row.price .v {
+        font-size:1.05rem;
+        color:var(--teal);
+        font-weight:700;
+      }
+
+      /* ── PAYMENT FORM ── */
+      .pay-form { text-align:left; }
+
+      .card-row {
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+      }
+
+      .input-icon-wrap { position:relative; }
+      .input-icon-wrap input { padding-right:42px; }
+      .input-icon {
+        position:absolute;
+        right:14px;
+        top:50%;
+        transform:translateY(-50%);
+        font-size:1.1rem;
+        pointer-events:none;
+      }
+
+      .secure-note {
+        font-size:.78rem;
+        color:var(--muted);
+        text-align:center;
+        margin-top:12px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:5px;
+      }
+
+      /* ── CONFIRMATION DETAILS ── */
+      .confirm-details {
+        background:var(--bg);
+        border-radius:14px;
+        padding:18px 20px;
+        text-align:left;
+        margin-bottom:26px;
+      }
+
+      .c-row {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:6px 0;
+        font-size:.89rem;
+        border-bottom:1px solid var(--border);
+      }
+      .c-row:last-child { border-bottom:none; }
+      .c-row .k { color:var(--muted); }
+      .c-row .v {
+        font-weight:500;
+        color:var(--text);
+        text-align:right;
+        max-width:65%;
+      }
+
+      /* ── SPINNER ── */
+      .spinner {
+        width:16px;
+        height:16px;
+        border:2px solid rgba(0,109,119,.2);
+        border-top-color:var(--teal);
+        border-radius:50%;
+        animation:spin .7s linear infinite;
+        display:inline-block;
+        vertical-align:middle;
+      }
+      .spinner-w {
+        border-color:rgba(255,255,255,.25);
+        border-top-color:white;
+      }
+
+      /* ── ANIMATIONS ── */
+      @keyframes fadeDown  { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes fadeUp    { from { opacity:0; transform:translateY(20px);  } to { opacity:1; transform:translateY(0); } }
+      @keyframes fadeIn    { from { opacity:0; } to { opacity:1; } }
+      @keyframes popIn     { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
+      @keyframes spin      { to { transform:rotate(360deg); } }
+      @keyframes pulseAnim { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(.75); } }
+      @keyframes checkDraw { from { stroke-dashoffset:60; } to { stroke-dashoffset:0; } }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width:520px) {
+        .booking-card,
+        .login-card,
+        .modal     { padding:32px 20px; }
+        .card-row  { grid-template-columns:1fr; }
+        header h1  { font-size:3rem; }
+        .slots-grid { grid-template-columns:repeat(2,1fr); }
+      }

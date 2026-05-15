@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABS | Appointment Booking System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+
+      <header>
+        <h1>ABS</h1>
+        <p>Appointment Booking System</p>
+        <span class="tagline">Healthcare &bull; Education &bull; Beauty</span>
+      </header>
+
+      <!-- SCREEN 1: LOGIN -->
+      <section id="screen-login" class="section">
+        <div class="login-card">
+          <h2>Welcome back</h2>
+          <p class="sub">Sign in to book your appointment</p>
+          <div class="demo-hint">
+            <strong>Demo credentials</strong>
+            Email: demo@abs.com &nbsp;|&nbsp; Password: 1234
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="login-email" placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="login-pass" placeholder="••••••••">
+          </div>
+          <p id="login-error" style="color:var(--danger);font-size:.88rem;margin-bottom:12px;display:none;"></p>
+          <button class="btn btn-primary" onclick="doLogin()">Sign In</button>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: DOMAIN -->
+      <section id="screen-domain" class="section hidden">
+        <div class="user-bar">
+          <div class="user-chip">
+            <span class="dot"></span>
+            <span id="user-name-chip">User</span>
+          </div>
+          <button class="logout-btn" onclick="doLogout()">Sign out</button>
+        </div>
+        <h2 class="section-title">Choose Your Domain</h2>
+        <p class="section-subtitle">Select a service category to get started</p>
+        <div class="domains-grid">
+          <div class="domain-card" onclick="selectDomain('health')">
+            <div class="icon">🏥</div>
+            <h3>Healthcare</h3>
+            <p>Doctors &amp; Clinics</p>
+            <span class="badge">Health Card Supported</span>
+          </div>
+          <div class="domain-card" onclick="selectDomain('education')">
+            <div class="icon">📖</div>
+            <h3>Education</h3>
+            <p>Tutors &amp; Institutes</p>
+            <span class="badge">Online &amp; In-person</span>
+          </div>
+          <div class="domain-card" onclick="selectDomain('beauty')">
+            <div class="icon">💆‍♀️</div>
+            <h3>Beauty</h3>
+            <p>Salons &amp; Spas</p>
+            <span class="badge">Walk-in Available</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: BOOKING -->
+      <section id="screen-booking" class="section hidden">
+        <div class="booking-card">
+          <button class="back-btn" onclick="goBack()">← Back to domains</button>
+          <h2 id="booking-title">Book Appointment</h2>
+
+          <div class="form-group">
+            <label>Service Provider</label>
+            <select id="provider" onchange="onFieldChange()">
+              <option value="">Select Provider</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="date" onchange="onFieldChange()">
+          </div>
+
+          <div id="slots-section" class="hidden">
+            <p class="slots-label">Select a Time Slot</p>
+            <div class="slots-legend">
+              <span><span class="legend-dot free"></span>Available</span>
+              <span><span class="legend-dot busy"></span>Unavailable</span>
+            </div>
+            <div class="slots-grid" id="slots-grid"></div>
+
+            <div id="availability-box" class="hidden">
+              <div id="avail-badge" class="availability-badge avail-checking">
+                <span class="pulse"></span>
+                <span id="avail-text">Checking…</span>
+              </div>
+            </div>
+          </div>
+
+          <button id="proceed-btn" class="btn btn-primary" onclick="checkAndProceed()" disabled>
+            Check Availability &amp; Proceed to Payment
+          </button>
+        </div>
+      </section>
+
+    </div><!-- /.container -->
+
+    <!-- PAYMENT MODAL -->
+    <div id="modal-pay" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-icon pay-icon">💳</div>
+        <h3>Secure Payment</h3>
+        <p class="modal-sub">Complete payment to confirm your appointment</p>
+        <div class="booking-summary" id="pay-summary"></div>
+        <div class="pay-form">
+          <div class="form-group input-icon-wrap">
+            <label>Card Number</label>
+            <input type="text" id="card-num" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)">
+            <span class="input-icon">💳</span>
+          </div>
+          <div class="form-group">
+            <label>Cardholder Name</label>
+            <input type="text" id="card-name" placeholder="Name on card">
+          </div>
+          <div class="card-row">
+            <div class="form-group">
+              <label>Expiry</label>
+              <input type="text" id="card-exp" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)">
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="password" id="card-cvv" placeholder="•••" maxlength="3">
+            </div>
+          </div>
+          <p id="pay-err" style="color:var(--danger);font-size:.85rem;margin-bottom:10px;display:none;"></p>
+          <button class="btn btn-pay" id="pay-btn" onclick="processPayment()">Pay &amp; Confirm Appointment</button>
+          <button class="btn btn-outline" onclick="closePayModal()">Cancel</button>
+        </div>
+        <p class="secure-note">🔒 256-bit SSL Encrypted</p>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION MODAL -->
+    <div id="modal-confirm" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-icon confirm-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <polyline
+              points="6,18 14,27 30,9"
+              stroke="white"
+              stroke-width="3.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-dasharray="60"
+              stroke-dashoffset="60"
+              style="animation:checkDraw .55s .2s ease forwards"
+            />
+          </svg>
+        </div>
+        <h3>Appointment Confirmed!</h3>
+        <p class="modal-sub">Your booking &amp; payment are complete. See you soon! 🎉</p>
+        <div class="confirm-details" id="confirm-details"></div>
+        <button class="btn btn-primary" onclick="bookAnother()">Book Another Appointment</button>
+        <button class="btn btn-outline" onclick="doLogout()">Sign Out</button>
+      </div>
+    </div>
+
+    <script src="script.js">
+     
+    </script>
+  </body>
+</html>
